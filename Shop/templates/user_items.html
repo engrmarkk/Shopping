@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h3 class="mt-5">{{ user.username }}'s Items</h3>
+
+<a href="{{ url_for('admin_users') }}" class="btn btn-secondary mb-3">Back to Admin</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Images</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>
+                    <img src="{{ item.image_url }}" width="100" height="100">
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
