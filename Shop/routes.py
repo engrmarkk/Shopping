@@ -127,11 +127,15 @@ def send_otp(email):
 def login():
 
 # Preventing the user from logging in again if already logged in
+
     if current_user.is_authenticated:
         return redirect(url_for('Index'))
     form = LoginForm()
     if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
+            if not user:
+                flash('Invalid email', 'danger')
+                return redirect(url_for('login'))
             if not user.is_verified:
                 flash('You are yet to be verified', 'danger')
                 send_otp(form.email.data)
