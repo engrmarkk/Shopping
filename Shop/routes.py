@@ -27,10 +27,10 @@ def Index():
 @app.route('/insert', methods=['POST'])
 @login_required
 def insert():
-    # if request.method == 'POST':
-    name = request.form['name']
-    quantity = request.form['quantity']
-    # new_item = Data(name=name,  quantity=quantity, user_id=current_user.id)
+    if request.method == 'POST':
+        name = request.form['name']
+        quantity = request.form['quantity']
+        new_item = Data(name=name,  quantity=quantity, user_id=current_user.id)
     
     
     if 'image' in request.files:
@@ -38,7 +38,7 @@ def insert():
         if image:
             upload_result = cloudinary.uploader.upload(image)
             image_url = upload_result['url']
-            # new_item.image_url = image_url   
+            new_item.image_url = image_url   
         
         
     if not name or not quantity:
