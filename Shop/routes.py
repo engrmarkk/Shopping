@@ -211,7 +211,6 @@ def admin_delete_user(user_id):
     return redirect(url_for('admin_users'))
 
 
-
 # Creating the admin route for viewing user-items
 @app.route('/admin/view_user_items/<int:user_id>/', methods=['GET'])
 @login_required

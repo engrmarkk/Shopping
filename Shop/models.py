@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    items = db.relationship('Data', backref='owner', lazy='dynamic')
+    items = db.relationship('Data', backref='owner', lazy='dynamic', cascade='all, delete-orphan')
 
 # Creating an admin
     is_admin = db.Column(db.Boolean, default=False)
