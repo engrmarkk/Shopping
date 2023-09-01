@@ -30,21 +30,21 @@ def insert():
     if request.method == 'POST':
         name = request.form['name']
         quantity = request.form['quantity']
-        new_item = Data(name=name,  quantity=quantity, user_id=current_user.id)
+        # new_item = Data(name=name,  quantity=quantity, user_id=current_user.id)
         
         
-    if 'image' in request.files:
-        image = request.files['image']
-        if image:
-            upload_result = cloudinary.uploader.upload(image)
-            image_url = upload_result['url']
-            new_item.image_url = image_url   
-        
-        
+        if 'image' in request.files:
+            image = request.files['image']
+            if image:
+                upload_result = cloudinary.uploader.upload(image)
+                image_url = upload_result['url']
+                # new_item.image_url = image_url   
+            
+            
         if not name or not quantity:
             flash("Please enter all fields!")
             return redirect(url_for('Index'))
-        
+            
     # if 'image' in request.files:
     #     image = request.files['image']
     #     if image:
@@ -53,7 +53,7 @@ def insert():
     #         new_item.image_url = image_url   
         
         
-
+        new_item = Data(name=name,  quantity=quantity, user_id=current_user.id, image_url=image_url)
         db.session.add(new_item)
         db.session.commit()
 
