@@ -42,9 +42,10 @@ def insert():
         try:
             upload_result = cloudinary.uploader.upload(image)
             image_url = upload_result.get('secure_url')
-        except:
-            flash("Image upload failed!", 'error')
+        except Exception as e:
+            flash(f"Image upload failed! {e}", 'error')
             return redirect(url_for('Index'))
+        
 
     new_item = Data(name=name, quantity=quantity, user_id=current_user.id, image_url=image_url)
     db.session.add(new_item)
