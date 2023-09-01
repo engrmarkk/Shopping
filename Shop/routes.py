@@ -37,7 +37,7 @@ def insert():
         image = request.files['image']
         if image:
             upload_result = cloudinary.uploader.upload(image)
-            image_url = upload_result['url']
+            image_url = upload_result['secure_url']
             new_item.image_url = image_url   
         
         
