@@ -27,33 +27,26 @@ def Index():
 @app.route('/insert', methods=['POST'])
 @login_required
 def insert():
-    if request.method == 'POST':
-        name = request.form['name']
-        quantity = request.form['quantity']
-        new_item = Data(name=name,  quantity=quantity, user_id=current_user.id)
     
+    name = request.form.get('name')
+    quantity = request.form.get('quantity')
     
-    if 'image' in request.files:
-        image = request.files['image']
-        if image:
-            upload_result = cloudinary.uploader.upload(image)
-            image_url = upload_result['secure_url']
-            new_item.image_url = image_url   
-        
-        
+    # Data validation
     if not name or not quantity:
         flash("Please enter all fields!")
         return redirect(url_for('Index'))
-        
-# if 'image' in request.files:
-#     image = request.files['image']
-#     if image:
-#         upload_result = cloudinary.uploader.upload(image)
-#         image_url = upload_result['url']
-#         new_item.image_url = image_url   
     
-    
-    # new_item = Data(name=name,  quantity=quantity, user_id=current_user.id, image_url=image_url)
+    image_url = None
+    if 'image' in request.files and request.files['image']:
+        image = request.files['image']
+        try:
+            upload_result = cloudinary.uploader.upload(image)
+            image_url = upload_result.get('secure_url')
+        except:
+            flash("Image upload failed!", 'error')
+            return redirect(url_for('Index'))
+
+    new_item = Data(name=name, quantity=quantity, user_id=current_user.id, image_url=image_url)
     db.session.add(new_item)
     db.session.commit()
 
