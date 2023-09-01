@@ -1,8 +1,5 @@
     {% extends 'base.html' %}
     {% include 'header.html' %}
-
-
-
     {% block title %} Home {% endblock %}
     {% block body %}
     <div class="container">
@@ -21,7 +18,6 @@
                         </tr>
                         
                     {% for row in items %}
-                    
                         <tr>
                             <!--<td>{{row.id}}</td>-->
                             <td class="text-center">{{row.name}}</td>
@@ -31,179 +27,80 @@
                                     <img src="{{row.image_url}}" alt="Item Image" width="130px" height="100px">
                                 </a>
                             </td>
-                        
-                            
-
                             <td class="text-center">
                                 <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Update</a>
                                 <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
                             </td>
                         </tr>
                     
-                    <!-- Modal Edit Employee-->
+                    <!-- Modal Update Items-->
     <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
-
         <div class="modal-content">
-
-
             <div class="modal-header">
-
-
                 <h4 class="modal-title">Update Cart</h4>
-
-
             </div>
-
-
             <div class="modal-body">
-
-
                 <form action="{{url_for('update')}}" method="POST">
-
-
                 <div class="form-group">
-
-
                     <label>Name:</label>
                     <input type="hidden"  name="id" value="{{row.id}}">
-
                     <input type="text" class="form-control" name="name" value="{{row.name}}">
-
-
                 </div>
-
-
-
-                
-
                 <div class="form-group">
-
-
                     <label>Quantity:</label>
-
                     <input type="number" class="form-control" name="quantity" value="{{row.quantity}}">
-
-
                 </div>
-
-
                 <div class="form-group">
-
-
                     <button class="btn btn-primary" type="submit">Update</button>
-
-
                 </div>
-
-
                 </form>
-
-
             </div>
-
-
             <div class="modal-footer">
-
-
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-
             </div>
-
-
         </div>
-
-
     </div>
-
     </div>
-                        {% endfor %}
-                        
-
-                    </table>
-
-
-                </div>
+    {% endfor %}
+            </table>
+</div>
 
 
 
-                    <!-- Modal Add Employee-->
-
-
+<!-- Modal Add Item-->
     <div id="mymodal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-
                 <h4 class="modal-title">Add Item</h4>
             </div>
             <div class="modal-body">
-
                     <form action="{{url_for('insert')}}" method="POST" enctype="multipart/form-data">
-
-
                     <div class="form-group">
                         <label>Name:</label>
                         <input type="text" class="form-control" name="name" required="1">
                     </div>
-
-
-                        
-
                     <div class="form-group">
                         <label>Quantity:</label>
                         <input type="number" class="form-control" name="quantity" required="1">
                     </div>
-
-
-
                     <div class="form-group">
                         <label>Image:</label>
                         <input type="file" name="image">
                     </div>
-
-
-
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">Add Item</button>
                     </div>
-
-
                     </form>
-
-
             </div>
-
-
             <div class="modal-footer">
-
-
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-
             </div>
-
-
         </div>
-
-
     </div>
-
-
     </div>
-
-
-
-
-
-            </div>
-
-        </div>
-
-
     </div>
-
-
-    {% endblock %}
+    </div>
+</div>
+{% endblock %}

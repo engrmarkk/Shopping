@@ -8,9 +8,11 @@ from flask_mail import Message
 from Shop import mail
 
 
+# Creating random One-Time-Password
 OTP = random.randint(1000, 9999)
 
 
+# Creating the Homepage route
 @app.route('/')
 def Index():
     all_data = []
@@ -20,6 +22,8 @@ def Index():
         pass
     return render_template("index.html", items=all_data[::-1])
 
+
+# Creating the add-item route
 @app.route('/insert', methods=['POST'])
 @login_required
 def insert():
@@ -55,7 +59,10 @@ def insert():
 
         flash("Item Added To Cart", 'success')
         return redirect(url_for('Index'))
+    
+    
 
+# Creating the update-item route
 @app.route('/update', methods=['POST'])
 def update():
     if request.method == 'POST':
@@ -72,7 +79,9 @@ def update():
 
         flash("Item Updated Successfully", 'success')
         return redirect(url_for('Index'))
-
+    
+    
+# Creating the delete-item  route
 @app.route('/delete/<int:id>/', methods=['GET', 'POST'])
 def delete(id):
     item = Data.query.get(id)
@@ -87,9 +96,9 @@ def delete(id):
 
 
 
+# Creating the register-user route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    
 # Preventing the user from logging in again if already logged in
     if current_user.is_authenticated:
         return redirect(url_for('Index'))
@@ -105,12 +114,15 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
+# Creating the OTP email
 def send_otp(email):
     msg = Message('Verification Token', sender='Anonymous@gmail.com', recipients=[email])
     msg.body = f'Your verification token is: {OTP}'
     mail.send(msg)
 
 
+
+# Creating the login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -137,14 +149,14 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-
+# Creating the logout route
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('Index'))
 
 
-
+# Creating the user-items route
 @app.route('/items',  methods=['GET', 'POST'])
 @login_required
 def items():
@@ -154,6 +166,7 @@ def items():
     
 
 
+# Creating the admin route 
 @app.route('/admin_users', methods=['GET', 'POST'])
 @login_required
 def admin_users():
@@ -165,6 +178,7 @@ def admin_users():
     return render_template('admin_users.html', users=users)
 
 
+# Creating the admin route for viewing users
 @app.route('/admin_view', methods=['GET', 'POST'])
 def admin_view():
     if not current_user.is_admin:
@@ -173,6 +187,8 @@ def admin_view():
     users = User.query.all()
     return render_template('admin_users.html', users=users)
 
+
+# Creating the admin route for deleting users
 @app.route('/admin/delete_user/<int:user_id>/', methods=['POST'])
 @login_required
 def admin_delete_user(user_id):
@@ -192,6 +208,7 @@ def admin_delete_user(user_id):
 
 
 
+# Creating the admin route for viewing user-items
 @app.route('/admin/view_user_items/<int:user_id>/', methods=['GET'])
 @login_required
 def view_user_items(user_id):
@@ -209,6 +226,7 @@ def view_user_items(user_id):
 
 
 
+# Creating the verify OTP for registering users
 @app.route('/verify_otp/<string:email>/', methods=['GET', 'POST'])
 def verify_otp(email):
     if request.method == 'POST':

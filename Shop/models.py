@@ -14,6 +14,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     items = db.relationship('Data', backref='owner', lazy='dynamic')
+
+# Creating an admin
     is_admin = db.Column(db.Boolean, default=False)
     is_verified = db.Column(db.Boolean, default=False)
     
@@ -22,6 +24,7 @@ class User(db.Model, UserMixin):
 
 
 
+# Creating a database for our items
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
