@@ -61,7 +61,7 @@ PyYAML
 referencing
 requests
 requests-oauthlib
-rpds-py
+# rpds-py
 six
 SQLAlchemy
 sqlparse
