@@ -53,7 +53,7 @@ def insert():
 #         new_item.image_url = image_url   
     
     
-    new_item = Data(name=name,  quantity=quantity, user_id=current_user.id, image_url=image_url)
+    # new_item = Data(name=name,  quantity=quantity, user_id=current_user.id, image_url=image_url)
     db.session.add(new_item)
     db.session.commit()
 
